@@ -23,6 +23,18 @@ namespace Hospital
       Assert.Equal (0, result);
     }
 
+    [Fact]
+    public void Test_Equal_ReturnsTRueIfSame()
+    {
+      //Arrange,Act
+      DateTime patientDate = new DateTime(2015,9,8);
+      Patient firstPatient = new Patient("James", 1, patientDate);
+      Patient secondPatient = new Patient("James", 1, patientDate);
+
+      //Assert
+      Assert.Equal(firstPatient,secondPatient);
+    }
+
     public void Dispose()
     {
       Patient.ClearAll();

@@ -46,6 +46,26 @@ namespace Hospital
       return _date;
     }
 
+    //Create override boolean
+    public override bool Equals(System.Object randomPatient)
+    {
+      if (!(randomPatient is Patient))
+      {
+        return false;
+      }
+      else
+      {
+        Patient newPatient = (Patient) randomPatient;
+        //Call booleans on newPatient instead of randomPatient to make sure its type is Patient
+        bool idEquality = (this.GetId() == newPatient.GetId());
+        bool nameEquality = (this.GetPatientName() == newPatient.GetPatientName());
+        bool doctorIdEquality = (this.GetDoctorId() == newPatient.GetDoctorId());
+        bool dateEquality = (this.GetDate() == newPatient.GetDate());
+        return (idEquality && nameEquality && doctorIdEquality && dateEquality);
+      }
+    }
+
+    //Create STATIC GetAll method to add instance to database
     public static List<Patient> GetAll()
     {
       //Make new empty list of instances
