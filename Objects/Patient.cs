@@ -104,6 +104,50 @@ namespace Hospital
         return instances;
     }
 
+    //Create method called on each individual, new instance to add to the static list
+    public void Save()
+    {
+      //Establish connection
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      //Type commands in Powershell
+      SqlCommand cmd = new SqlCommand("INSERT INTO patient (name, doctor_id, date) OUTPUT INSERTED.id VALUES (@PatientName, @PatientDoctorId, @PatientDate);", conn);
+      //Define each parameters
+      SqlParameter patientNameParameter = new SqlParameter();
+      patientNameParameter.ParameterName = "@PatientName";
+      patientNameParameter.Value = this.GetPatientName();
+
+      SqlParameter DoctorIdParameter = new SqlParameter();
+      DoctorIdParameter.ParameterName = "@PatientDoctorId";
+      DoctorIdParameter.Value = this.GetDoctorId();
+
+      SqlParameter PatientDateParameter = new SqlParameter();
+      PatientDateParameter.ParameterName = "@PatientDate";
+      PatientDateParameter.Value = this.GetDate();
+
+      //Add the parameters onto Powershell
+      cmd.Parameters.Add(patientNameParameter);
+      cmd.Parameters.Add(DoctorIdParameter);
+      cmd.Parameters.Add(PatientDateParameter);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      //Make sure the id is not instance id but its id in the table patients
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
 
     //Static method for disposing and also for clearing the database
     public static void ClearAll()
