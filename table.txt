@@ -1,0 +1,26 @@
+CREATE TABLE [Specialty] (
+  [id] int IDENTITY (1, 1) ,
+  [name] varchar ,
+ PRIMARY KEY ([id])
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [Doctor] (
+  [id] int IDENTITY (1, 1) ,
+  [name] tinyint ,
+  [specialty_id] int ,
+ PRIMARY KEY ([id])
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [patient] (
+  [id] int IDENTITY (1, 1) ,
+  [name] varchar ,
+  [doctor_id] int ,
+ PRIMARY KEY ([id])
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [Doctor] ADD FOREIGN KEY (specialty_id) REFERENCES [Specialty] ([id]);
+
+ALTER TABLE [patient] ADD FOREIGN KEY (doctor_id) REFERENCES [Doctor] ([id]);

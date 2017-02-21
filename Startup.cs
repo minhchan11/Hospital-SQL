@@ -5,7 +5,7 @@ using Nancy;
 using Nancy.Owin;
 using Nancy.ViewEngines.Razor;
 
-namespace ToDoList
+namespace Hospital
 {
   public class Startup
   {
@@ -41,6 +41,6 @@ namespace ToDoList
 
   public static class DBConfiguration
   {
-    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=doctor;Integrated Security=SSPI;";
+    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=hospital;Integrated Security=SSPI;";
   }
 }
