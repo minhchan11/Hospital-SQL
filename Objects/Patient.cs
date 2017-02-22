@@ -138,6 +138,7 @@ namespace Hospital
         this._id = rdr.GetInt32(0);
       }
 
+      //Close connection
       if(rdr != null)
       {
         rdr.Close();
@@ -147,6 +148,54 @@ namespace Hospital
       {
         conn.Close();
       }
+    }
+
+    //Create static method to find a patient
+    public static Patient Find(int id)
+    {
+      //Establish connection
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      //Type commands in Powershell
+      SqlCommand cmd = new SqlCommand("SELECT * FROM patient WHERE id = @PatientId ORDER BY cast([date] as datetime) asc;;", conn);
+
+      //Define each parameters
+      SqlParameter patientIdParameter = new SqlParameter();
+      patientIdParameter.ParameterName = "@PatientId";
+      patientIdParameter.Value = id.ToString();
+
+      //Add the parameters onto Powershell
+      cmd.Parameters.Add(patientIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      //Define new attributes to be used
+      int foundPatientId = 0;
+      string foundPatientName = null;
+      int foundPatientDoctorId = 1;
+      DateTime foundDate = new DateTime();
+
+      while(rdr.Read())
+      {
+        foundPatientId = rdr.GetInt32(0);
+        foundPatientName = rdr.GetString(1);
+        foundPatientDoctorId = rdr.GetInt32(2);
+        foundDate = rdr.GetDateTime(3);
+      }
+
+      Patient foundPatient = new Patient (foundPatientName,foundPatientDoctorId,foundDate,foundPatientId);
+
+      //Close connection
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if(conn != null)
+      {
+        conn.Close();
+      }
+
+      return foundPatient;
     }
 
     //Static method for disposing and also for clearing the database

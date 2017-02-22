@@ -68,6 +68,21 @@ namespace Hospital
       Assert.Equal(output,verify);
     }
 
+    [Fact]
+    public void Find_APatientInDatabase_ReturnSameIDedPatient()
+    {
+      //Arrange
+      DateTime patientDate = new DateTime(2015,9,8);
+      Patient testPatient = new Patient("James", 1, patientDate);
+      testPatient.Save();
+
+      //Act
+      Patient foundPatient = Patient.Find(testPatient.GetId());
+
+      //Assert
+      Assert.Equal(testPatient,foundPatient);
+    }
+
     public void Dispose()
     {
       Patient.ClearAll();
