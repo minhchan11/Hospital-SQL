@@ -85,7 +85,7 @@ namespace Hospital
 
     public void Dispose()
     {
-      Patient.ClearAll();
+      Patient.DeleteAll();
     }
   }
 }

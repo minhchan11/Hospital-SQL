@@ -199,7 +199,7 @@ namespace Hospital
     }
 
     //Static method for disposing and also for clearing the database
-    public static void ClearAll()
+    public static void DeleteAll()
     {
       //Establish connection
       SqlConnection conn = DB.Connection();
